@@ -1,6 +1,6 @@
 # 🎓 Universal Learning Buddy
 
-![Hackathon Winner Badge](https://img.shields.io/badge/Hackathon-Champion-4CAF50) ![MERN Stack](https://img.shields.io/badge/Stack-MERN%2BFlask-blue) ![License MIT](https://img.shields.io/badge/License-MIT-lightgrey)
+![MERN Stack](https://img.shields.io/badge/Stack-MERN%2BFlask-blue) ![License MIT](https://img.shields.io/badge/License-MIT-lightgrey)
 
 ---
 
