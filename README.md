@@ -60,7 +60,7 @@ Whether you're cramming for finals or crafting lesson plans, the Universal Learn
 
 ```ascii
 ┌────────────────────────┐     ┌─────────────────────┐
-│      React + Redux     │◀────▶│     Express.js     │
+│      React + Redux     │◀────▶│     Express.js    │
 │ (Student & Teacher UI) │     └─────────────────────┘
 └────────────────────────┘             │
                                        ▼
@@ -72,7 +72,7 @@ Whether you're cramming for finals or crafting lesson plans, the Universal Learn
                                        ▼
                                ┌────────────────┐
                                │  Google Gemini │
-                               │      API      │
+                               │      API       │
                                └────────────────┘
 ```
 
@@ -222,7 +222,6 @@ Open your browser and go to `http://localhost:3000`
 - [ ] Voice‑to‑text note taking
 - [ ] Student & Teacher portals
 - [ ] Real‑time progress tracker
-- [ ] Mobile app (React Native)
 - [ ] Peer‑to‑peer study groups
 - [ ] Gamification & achievement badges
 - [ ] Multilingual support
