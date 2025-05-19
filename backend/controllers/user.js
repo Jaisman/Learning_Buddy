@@ -1,6 +1,6 @@
 import User from "../models/user.js";
 import bcrypt from "bcryptjs";
-
+import jwt from "jsonwebtoken";
 const secret= "buddy";
 export async function handleUserSignUp(req, res) {
     try {
@@ -69,4 +69,4 @@ export async function handleUserLogin(req,res) {
 
 }
 
-export default handleUserSignUp;
+export default {handleUserSignUp, handleUserLogin};
