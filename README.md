@@ -60,20 +60,22 @@ Whether you're cramming for finals or crafting lesson plans, the Universal Learn
 
 ```ascii
 ┌────────────────────────┐     ┌─────────────────────┐
-│      React + Redux     │◀────▶│     Express.js    │
+│      React + Redux     │◀──▶│     Express.js      │
 │ (Student & Teacher UI) │     └─────────────────────┘
-└────────────────────────┘             │
-                                       ▼
-                               ┌────────────────────────┐
-                               │       Flask API        │
-                               │ (LLM Proxy & TTS/STT)  │
-                               └────────────────────────┘
-                                       │
-                                       ▼
-                               ┌────────────────┐
-                               │  Google Gemini │
-                               │      API       │
-                               └────────────────┘
+└────────────────────────┘
+            │
+            ▼           
+┌────────────────────────┐
+│       Flask API        │
+│ (LLM Proxy & TTS/STT)  │
+└────────────────────────┘
+            │
+            ▼
+    ┌────────────────┐
+    │  Google Gemini │
+    │      API       │
+    └────────────────┘                             
+                               
 ```
 
 ### Tech Stack Details
@@ -124,7 +126,7 @@ Whether you're cramming for finals or crafting lesson plans, the Universal Learn
 
    Flask (LLM & STT/TTS):
    ```bash
-   cd ../llm-proxy
+   cd ../flask_backend
    pip install -r requirements.txt
    ```
 
@@ -133,30 +135,6 @@ Whether you're cramming for finals or crafting lesson plans, the Universal Learn
    cd ../frontend
    npm install
    ```
-
-### Environment Variables
-
-Create a `.env` file in each service folder:
-
-#### backend/.env
-```env
-MONGO_URI=<your_mongo_connection_string>
-JWT_SECRET=<your_jwt_secret>
-PORT=5000
-```
-
-#### llm-proxy/.env
-```env
-FLASK_ENV=development
-GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/google-creds.json
-GEMINI_API_ENDPOINT=https://gemini.googleapis.com/v1/chat/completions
-```
-
-#### frontend/.env
-```env
-REACT_APP_API_URL=http://localhost:5000
-REACT_APP_STT_URL=http://localhost:8000
-```
 
 ### Running the App
 
@@ -173,17 +151,17 @@ REACT_APP_STT_URL=http://localhost:8000
 
 3. **Launch Flask LLM Proxy**
    ```bash
-   cd ../llm-proxy
-   flask run --port=8000
+   cd ../flask_backend
+   python app.py
    ```
 
 4. **Launch React Frontend**
    ```bash
    cd ../frontend
-   npm start
+   npm run dev
    ```
 
-Open your browser and go to `http://localhost:3000`
+Open your browser and go to `http://localhost:5173`
 
 ---
 
