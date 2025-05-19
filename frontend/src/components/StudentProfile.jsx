@@ -6,16 +6,13 @@ const StudentProfile = () => {
       const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('personal');
   const [isEditing, setIsEditing] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [profileData, setProfileData] = useState({
     firstName: 'John',
     lastName: 'Doe',
     email: 'john.doe@email.com',
     phone: '+1 (555) 123-4567',
-    dateOfBirth: '1999-05-15',
     grade: '12th Grade',
     institution: 'Springfield High School',
-    studentId: 'STU2024001',
     enrollmentDate: '2024-01-15'
   });
 
@@ -193,17 +190,17 @@ const initials = `${profileData.firstName.charAt(0)}${profileData.lastName.charA
                         </div>
 
                         <div className="mb-3">
-                          <label className="form-label">Date of Birth</label>
+                          <label className="form-label">Grade</label>
                           <input 
-                            type="date" 
+                            type="text" 
                             className="form-control" 
-                            value={profileData.dateOfBirth}
-                            onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
+                            value={profileData.grade}
+                            onChange={(e) => handleInputChange('grade', e.target.value)}
                             disabled={!isEditing}
                           />
                         </div>
-
                         
+
                       </div>
                     </div>
                   </div>
@@ -239,7 +236,7 @@ const initials = `${profileData.firstName.charAt(0)}${profileData.lastName.charA
                         <div className="text-start">
                           <p><Mail size={16} className="me-2" />{profileData.email}</p>
                           <p><Phone size={16} className="me-2" />{profileData.phone}</p>
-                          <p><MapPin size={16} className="me-2" />Student ID: {profileData.studentId}</p>
+                         
                           <p><Calendar size={16} className="me-2" />Enrolled: {profileData.enrollmentDate}</p>
                         </div>
                       </div>

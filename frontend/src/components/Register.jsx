@@ -9,6 +9,7 @@ import {
   School, 
   BookOpen,
   ArrowRight,
+  PhoneCallIcon,
   CheckCircle
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -150,12 +151,12 @@ const Register = () => {
                       <div className="form-text">We'll never share your email with anyone else.</div>
                     </div>
 
-                    {/* Email field */}
+                    {/* Phone field */}
                     <div className="mb-3">
                       <label htmlFor="phole" className="form-label">Phone Number</label>
                       <div className="input-group">
                         <span className="input-group-text bg-light border-end-0">
-                          <Mail size={18} className="text-muted" />
+                          <PhoneCallIcon size={18} className="text-muted" />
                         </span>
                         <input
                           type="text"
