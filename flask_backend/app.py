@@ -7,7 +7,7 @@ from gtts import gTTS
 from pydub import AudioSegment
 import uuid
 
-GOOGLE_API_KEY="AIzaSyCpiyp3n_vP_EXgAFOcaraF3rDlY9xZthM"
+GOOGLE_API_KEY=""
 
 # Initialize Flask app
 app = Flask(__name__)
