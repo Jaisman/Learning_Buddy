@@ -12,10 +12,24 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle login logic here
-    console.log('Login attempted with:', { email, password, rememberMe });
+     try {
+      const response = await axios.post(
+        'http://localhost:8000/user/login',
+        { email, password },
+        { withCredentials: true }
+      );
+
+      alert("login successful");
+      localStorage.setItem('user', JSON.stringify(response.data.id));
+      localStorage.setItem('role', JSON.stringify(response.data.role));
+      navigate('/');
+    }
+    catch(error){
+      console.error('Login failed:', error.response?.data?.message || 'An error occurred');
+    }
   };
 
   return (

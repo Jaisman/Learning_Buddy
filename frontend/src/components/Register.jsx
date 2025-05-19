@@ -12,19 +12,20 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const Register = () => {
       const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     email: '',
-    phone:'',
     password: '',
     confirmPassword: '',
-    educationLevel: '',
+    education_level: '',
+    phoneNumber: '',
     agreeTerms: false
   });
 
@@ -44,11 +45,19 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle registration logic here
-    console.log('Registration submitted with:', formData);
+    try {
+      const { first_name, last_name, email, password, education_level, phoneNumber } = formData;
+      const data = { first_name, last_name, email, password, education_level, phoneNumber };
+      const response = await axios.post('http://localhost:8000/user/signup', data);
+      console.log(response.data);
+      navigate('/login');
+    } catch (err) {
+      console.error('Signup error:', err.response?.data || err.message);
+    }
   };
+
 
   return (
     <div className="edu-assist-register min-vh-100 d-flex flex-column">
@@ -81,7 +90,7 @@ const Register = () => {
                     <div className="row">
                       {/* First Name */}
                       <div className="col-md-6 mb-3">
-                        <label htmlFor="firstName" className="form-label">First Name</label>
+                        <label htmlFor="first_name" className="form-label">First Name</label>
                         <div className="input-group">
                           <span className="input-group-text bg-light border-end-0">
                             <User size={18} className="text-muted" />
@@ -89,10 +98,10 @@ const Register = () => {
                           <input
                             type="text"
                             className="form-control border-start-0"
-                            id="firstName"
-                            name="firstName"
+                            id="first_name"
+                            name="first_name"
                             placeholder="Enter your first name"
-                            value={formData.firstName}
+                            value={formData.first_name}
                             onChange={handleChange}
                             required
                           />
@@ -101,7 +110,7 @@ const Register = () => {
 
                       {/* Last Name */}
                       <div className="col-md-6 mb-3">
-                        <label htmlFor="lastName" className="form-label">Last Name</label>
+                        <label htmlFor="last_name" className="form-label">Last Name</label>
                         <div className="input-group">
                           <span className="input-group-text bg-light border-end-0">
                             <User size={18} className="text-muted" />
@@ -109,10 +118,10 @@ const Register = () => {
                           <input
                             type="text"
                             className="form-control border-start-0"
-                            id="lastName"
-                            name="lastName"
+                            id="last_name"
+                            name="last_name"
                             placeholder="Enter your last name"
-                            value={formData.lastName}
+                            value={formData.last_name}
                             onChange={handleChange}
                             required
                           />
@@ -151,10 +160,10 @@ const Register = () => {
                         <input
                           type="text"
                           className="form-control border-start-0"
-                          id="phone"
-                          name="phone"
+                          id="phoneNumber"
+                          name="phoneNumber"
                           placeholder=""
-                          value={formData.phone}
+                          value={formData.phoneNumber}
                           onChange={handleChange}
                           required
                         />
@@ -163,16 +172,16 @@ const Register = () => {
                     </div>
                     {/* Education Level */}
                     <div className="mb-3">
-                      <label htmlFor="educationLevel" className="form-label">Education Level</label>
+                      <label htmlFor="education_level" className="form-label">Education Level</label>
                       <div className="input-group">
                         <span className="input-group-text bg-light border-end-0">
                           <School size={18} className="text-muted" />
                         </span>
                         <select 
                           className="form-select border-start-0" 
-                          id="educationLevel"
-                          name="educationLevel"
-                          value={formData.educationLevel}
+                          id="education_level"
+                          name="education_level"
+                          value={formData.education_level}
                           onChange={handleChange}
                           required
                         >
