@@ -13,8 +13,6 @@ const StudentProfile = () => {
     email: 'john.doe@email.com',
     phone: '+1 (555) 123-4567',
     dateOfBirth: '1999-05-15',
-    address: '123 Student Street, University City, UC 12345',
-    bio: 'Computer Science student passionate about machine learning and web development.',
     grade: '12th Grade',
     institution: 'Springfield High School',
     studentId: 'STU2024001',
@@ -205,28 +203,7 @@ const initials = `${profileData.firstName.charAt(0)}${profileData.lastName.charA
                           />
                         </div>
 
-                        <div className="mb-3">
-                          <label className="form-label">Address</label>
-                          <textarea 
-                            className="form-control" 
-                            rows="3"
-                            value={profileData.address}
-                            onChange={(e) => handleInputChange('address', e.target.value)}
-                            disabled={!isEditing}
-                          />
-                        </div>
-
-                        <div className="mb-3">
-                          <label className="form-label">Bio</label>
-                          <textarea 
-                            className="form-control" 
-                            rows="4"
-                            value={profileData.bio}
-                            onChange={(e) => handleInputChange('bio', e.target.value)}
-                            disabled={!isEditing}
-                            placeholder="Tell us about yourself..."
-                          />
-                        </div>
+                        
                       </div>
                     </div>
                   </div>

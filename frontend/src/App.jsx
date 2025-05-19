@@ -17,6 +17,7 @@ function App() {
       <Route path="/about" element={<About/>}/>
       <Route path="/stu-dash" element={<StudentDashboard/>}/>
       <Route path="/stu-profile" element={<StudentProfile/>}/>
+      
       </Routes>
     </BrowserRouter>
     </>

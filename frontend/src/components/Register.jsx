@@ -21,6 +21,7 @@ const Register = () => {
     firstName: '',
     lastName: '',
     email: '',
+    phone:'',
     password: '',
     confirmPassword: '',
     educationLevel: '',
@@ -140,6 +141,26 @@ const Register = () => {
                       <div className="form-text">We'll never share your email with anyone else.</div>
                     </div>
 
+                    {/* Email field */}
+                    <div className="mb-3">
+                      <label htmlFor="phole" className="form-label">Phone Number</label>
+                      <div className="input-group">
+                        <span className="input-group-text bg-light border-end-0">
+                          <Mail size={18} className="text-muted" />
+                        </span>
+                        <input
+                          type="text"
+                          className="form-control border-start-0"
+                          id="phone"
+                          name="phone"
+                          placeholder=""
+                          value={formData.phone}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                      <div className="form-text">We'll never share your email with anyone else.</div>
+                    </div>
                     {/* Education Level */}
                     <div className="mb-3">
                       <label htmlFor="educationLevel" className="form-label">Education Level</label>
