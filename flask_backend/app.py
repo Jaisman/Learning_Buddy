@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import os
 import google.generativeai as genai
+from collections import deque
 
 GOOGLE_API_KEY="AIzaSyCh-xyT3YKcdxc8tRVChpOyEhY-ag8q8uk"
 
@@ -13,6 +14,11 @@ CORS(app)
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
 
+# Store conversation history with a maximum of 5 exchanges
+conversation_history = deque(maxlen=5)
+
+student_info = ["John Doe", "10th grade" , '16 years old', "male",'CBSE board']
+
 list_of_subjects = [
     "Maths: grade 7/10, weakness in algebra",
     "Physics: grade 8/10, weakness in mechanics",
@@ -23,6 +29,7 @@ list_of_subjects = [
     "Geography: grade 7/10, weakness in map reading",
     "Computer Science: grade 9/10, weakness in programming",
 ]
+
 # Ask Gemini chatbot
 @app.route("/ask", methods=["POST"])
 def ask():
@@ -30,20 +37,37 @@ def ask():
     user_input = data.get("question", "")
     if not user_input:
         return jsonify({"error": "Empty question"}), 400
+    
+    # Add the new user question to conversation history
+    conversation_history.append({"role": "user", "content": user_input})
+    
+    # Build conversation context
+    conversation_context = "\n".join([
+        f"{'User' if msg['role'] == 'user' else 'Assistant'}: {msg['content']}"
+        for msg in conversation_history
+    ])
         
-    prompt = f"""You are a learning buddy chatbot helping a student with their studies. 
+    prompt = f"""You are a learning buddy chatbot helping a student {student_info} with their studies. 
 Here is the student's current performance profile:
 {list_of_subjects}
 
+Previous conversation context:
+{conversation_context}
+
 When answering:
-1. Always reference the student's weaknesses and grades when relevant
+1. Always reference the student and his/her weaknesses and grades when relevant
 2. Provide specific advice based on their current performance
 3. Offer concrete study tips targeting their weak areas
 4. Keep explanations clear and student-friendly
+5. Maintain context from previous messages when relevant
 
 Current question: {user_input}"""
     
     response = model.generate_content(prompt)
+    
+    # Add the bot's response to conversation history
+    conversation_history.append({"role": "assistant", "content": response.text})
+    
     return jsonify({"answer": response.text})
 
 # Health check

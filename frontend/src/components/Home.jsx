@@ -18,7 +18,7 @@ const Home = () => {
                 <a className="nav-link active" href="/">Home</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/Features">Features</a>
+                <a className="nav-link" href="/Chatbot">Chatbot</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/about">About</a>
