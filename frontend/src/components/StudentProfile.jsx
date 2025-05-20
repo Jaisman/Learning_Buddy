@@ -69,7 +69,7 @@ const initials = `${profileData.firstName.charAt(0)}${profileData.lastName.charA
           <div className="navbar-nav ms-auto d-flex flex-row">
             
             <div className="nav-item">
-              <button className="btn btn-outline-light" style={{paddingBottom:0}} onClick={()=>{navigate('/stu-dash')}}>
+              <button className="btn btn-outline-light" style={{paddingBottom:0}} onClick={()=>{navigate('/StudentDashboard')}}>
                 <p className='p-0'>Back to Dashboard</p>
               </button>
             </div>

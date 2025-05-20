@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, BookOpen, Video, MessageCircle, User, Bell, Search, ChevronRight, Play, CheckCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, BookOpen, Video, MessageCircle, User, Bell, Search, ChevronRight, Play, CheckCircle, AlertCircle, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -45,6 +45,9 @@ const StudentDashboard = () => {
       {/* Navigation */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container-fluid">
+          <button className="btn btn-outline-light me-3" onClick={() => navigate('/')}>
+            <ArrowLeft size={20} />
+          </button>
           <span className="navbar-brand fw-bold">EduAssist</span>
           <div className="navbar-nav ms-auto d-flex flex-row">
             <div className="nav-item dropdown">
@@ -99,7 +102,7 @@ const StudentDashboard = () => {
                 </button>
                 <button 
                   className={`list-group-item list-group-item-action border-0 ${activeTab === 'askai' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('askai')}
+                  onClick={() => navigate('/chatbot')}
                 >
                   <BookOpen size={18} className="me-2" />
                   Ask AI

@@ -113,8 +113,8 @@ const Chatbot = () => {
             <BookOpen size={24} className="me-2" />
             EduAssist
           </a>
-          <button className="btn btn-outline-light btn-sm d-none d-md-block" onClick={() => navigate('/')}>
-            Back to Home
+          <button className="btn btn-outline-light btn-sm d-none d-md-block" onClick={() => navigate(-1)}>
+            Back
           </button>
         </div>
       </nav>

@@ -21,6 +21,9 @@ const Home = () => {
                 <a className="nav-link" href="/Chatbot">Chatbot</a>
               </li>
               <li className="nav-item">
+                <a className="nav-link" href="/StudentDashboard">StudentDashboard</a>
+              </li>
+              <li className="nav-item">
                 <a className="nav-link" href="/about">About</a>
               </li>
             </ul>

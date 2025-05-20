@@ -17,7 +17,7 @@ function App() {
       <Route path="/signup" element={<Register/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/Chatbot" element={<Chatbot />} />  {/* 👈 Renders your chatbot */}
-      <Route path="/stu-dash" element={<StudentDashboard/>}/>
+      <Route path="/StudentDashboard" element={<StudentDashboard/>}/>
       <Route path="/stu-profile" element={<StudentProfile/>}/>
       
       </Routes>
