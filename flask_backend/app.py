@@ -3,6 +3,8 @@ from flask_cors import CORS
 import os
 import google.generativeai as genai
 from collections import deque
+from gtts import gTTS
+import tempfile
 
 GOOGLE_API_KEY="AIzaSyCh-xyT3YKcdxc8tRVChpOyEhY-ag8q8uk"
 
@@ -17,7 +19,7 @@ model = genai.GenerativeModel("gemini-1.5-flash")
 # Store conversation history with a maximum of 5 exchanges
 conversation_history = deque(maxlen=5)
 
-student_info = ["John Doe", "10th grade" , '16 years old', "male",'CBSE board']
+student_info = ["Shubham Chauhan", "10th grade" , '16 years old', "male",'CBSE board']
 
 list_of_subjects = [
     "Maths: grade 7/10, weakness in algebra",
@@ -74,6 +76,31 @@ Current question: {user_input}"""
 @app.route("/")
 def home():
     return "Learning Buddy Flask API is running!"
+
+# Text to Speech endpoint
+@app.route("/text-to-speech", methods=["POST"])
+def text_to_speech():
+    data = request.json
+    text = data.get("text", "")
+    if not text:
+        return jsonify({"error": "Empty text"}), 400
+    
+    # Create a temporary file to store the audio
+    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.mp3')
+    temp_filename = temp_file.name
+    temp_file.close()
+    
+    # Generate speech from text
+    tts = gTTS(text=text, lang='en')
+    tts.save(temp_filename)
+    
+    # Send the audio file
+    return send_file(
+        temp_filename,
+        mimetype='audio/mpeg',
+        as_attachment=True,
+        download_name='speech.mp3'
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

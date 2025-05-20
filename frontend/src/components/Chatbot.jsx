@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import { Send, Bot, BookOpen } from 'lucide-react';
+import { Send, Bot, BookOpen, Mic, Volume2 } from 'lucide-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactMarkdown from 'react-markdown';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,66 @@ const Chatbot = () => {
   const [userInput, setUserInput] = useState('');
   const [conversation, setConversation] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef(null);
+
+  // Initialize speech recognition
+  const initSpeechRecognition = () => {
+    if (!('webkitSpeechRecognition' in window)) {
+      alert('Speech recognition is not supported in your browser.');
+      return;
+    }
+
+    recognitionRef.current = new window.webkitSpeechRecognition();
+    recognitionRef.current.continuous = false;
+    recognitionRef.current.interimResults = false;
+
+    recognitionRef.current.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setUserInput(transcript);
+      setIsListening(false);
+    };
+
+    recognitionRef.current.onerror = (event) => {
+      console.error('Speech recognition error:', event.error);
+      setIsListening(false);
+    };
+
+    recognitionRef.current.onend = () => {
+      setIsListening(false);
+    };
+  };
+
+  const startListening = () => {
+    if (!recognitionRef.current) {
+      initSpeechRecognition();
+    }
+    setIsListening(true);
+    recognitionRef.current.start();
+  };
+
+  const stopListening = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+    }
+    setIsListening(false);
+  };
+
+  const handleTextToSpeech = async (text) => {
+    try {
+      const response = await axios.post('http://localhost:5000/text-to-speech', {
+        text: text
+      }, {
+        responseType: 'blob'
+      });
+
+      const audioUrl = URL.createObjectURL(response.data);
+      const audio = new Audio(audioUrl);
+      audio.play();
+    } catch (error) {
+      console.error('Error converting text to speech:', error);
+    }
+  };
 
   const handleSend = async () => {
     if (!userInput.trim()) return;
@@ -76,6 +136,14 @@ const Chatbot = () => {
                 }`}
               >
                 <ReactMarkdown>{msg.text}</ReactMarkdown>
+                {msg.sender === 'bot' && (
+                  <button
+                    className="btn btn-sm btn-link p-0 ms-2"
+                    onClick={() => handleTextToSpeech(msg.text)}
+                  >
+                    <Volume2 size={16} />
+                  </button>
+                )}
               </div>
             </div>
           ))}
@@ -97,6 +165,13 @@ const Chatbot = () => {
             onChange={(e) => setUserInput(e.target.value)}
             onKeyDown={handleKeyDown}
           />
+          <button 
+            className="btn btn-outline-primary" 
+            onClick={isListening ? stopListening : startListening}
+            title={isListening ? "Stop listening" : "Start voice input"}
+          >
+            <Mic className={isListening ? "text-danger" : ""} />
+          </button>
           <button className="btn btn-primary" onClick={handleSend} disabled={loading}>
             <Send />
           </button>
