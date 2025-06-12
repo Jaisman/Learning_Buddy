@@ -39,15 +39,15 @@ const Login = () => {
       const { authToken, id, role } = response.data;
       if (rememberMe) {
         localStorage.setItem('authToken', authToken);
+        localStorage.setItem('userId',id);
       } else {
         sessionStorage.setItem('authToken', authToken);
       }
       localStorage.setItem('userId', id);
       localStorage.setItem('role', role);
 
-      navigate('/');
+      navigate('/stu-dash');
     } catch (error) {
-      // backend returns { error: "..." }
       const msg = error.response?.data?.error
         || 'Login failed. Please check your credentials.';
       setErrorMsg(msg);
