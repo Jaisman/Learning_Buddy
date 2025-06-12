@@ -1,24 +1,70 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Mail, Phone, MapPin, Calendar, BookOpen, Award,  Camera, Edit3, Save, Bell} from 'lucide-react';
+import axios from 'axios';
+import { User, Mail, Phone, Calendar, BookOpen, Award,  Camera, Edit3, Save, Bell} from 'lucide-react';
 
 const StudentProfile = () => {
       const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('personal');
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@email.com',
-    phone: '+1 (555) 123-4567',
-    grade: '12th Grade',
-    institution: 'Springfield High School',
-    enrollmentDate: '2024-01-15'
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    grade: '',
+    enrollmentDate: ''
   });
 
- 
 
-  // Academic data
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const userId = localStorage.getItem('userId');
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        setLoading(true);
+        const resp = await axios.get(`http://localhost:8000/user/profile/${userId}`);
+        setProfileData({
+          firstName: resp.data.firstName,
+          lastName: resp.data.lastName,
+          email: resp.data.email,
+          phone: resp.data.phoneNumber,
+          grade: resp.data.educationLevel
+        });
+      } catch (error) {
+        console.error(error);
+        setError('Failed to load profile.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (userId) {
+      fetchProfile();
+    }
+  }, [userId]);
+
+ 
+  const handleUpdate = async()=>{
+    try {
+      await axios.put(`http://localhost:8000/user/update_profile/${userId}`),{
+        firstName: profileData.firstName,
+        lastName: profileData.lastName,
+        email: profileData.email,
+        phoneNumber: profileData.phoneNumber,
+        educationLevel: profileData.grade
+      };
+      alert("Profile updated successfully!");
+
+    } catch (error) {
+      console.error(error);
+      alert("Failed to update profile");
+    }
+    setIsEditing(!isEditing);
+  }
+
   const academicStats = {
     totalCourses: 6,
     completedCourses: 2,
@@ -43,13 +89,7 @@ const StudentProfile = () => {
     { id: 4, activity: 'Watched video: Quantum Mechanics', course: 'Physics', date: '2025-05-15' }
   ];
 
-  const handleProfileUpdate = () => {
-    if (isEditing) {
-      // Save changes
-      alert('Profile updated successfully!');
-    }
-    setIsEditing(!isEditing);
-  };
+
 
   const handleInputChange = (field, value) => {
     setProfileData(prev => ({
@@ -124,7 +164,7 @@ const initials = `${profileData.firstName.charAt(0)}${profileData.lastName.charA
                   <h2>Personal Information</h2>
                   <button 
                     className={`btn ${isEditing ? 'btn-success' : 'btn-primary'}`}
-                    onClick={handleProfileUpdate}
+                    onClick={handleUpdate}
                   >
                     {isEditing ? (
                       <>
